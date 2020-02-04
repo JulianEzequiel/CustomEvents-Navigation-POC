@@ -7,16 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.utilities.money.livedatanavigation.R
 import com.utilities.money.livedatanavigation.navigation.common.Wizards
-import com.utilities.money.livedatanavigation.BasicAppEvents
-import com.utilities.money.livedatanavigation.wizard2.event.Wizard2ChildEvents
-import com.utilities.money.livedatanavigation.navigation.util.getObserver
-import com.utilities.money.livedatanavigation.navigation.util.ownEvents
+import com.utilities.money.livedatanavigation.BasicAppActions
+import com.utilities.money.livedatanavigation.wizard2.event.Wizard2ChildActions
+import com.utilities.money.livedatanavigation.navigation.util.ownActionsScope
 
 class ActivityHost : AppCompatActivity() {
 
-    lateinit var basicAppEvents: BasicAppEvents
+    lateinit var basicAppActions: BasicAppActions
 
-    lateinit var wizard2ChildEvents: Wizard2ChildEvents
+    lateinit var wizard2ChildActions: Wizard2ChildActions
 
     lateinit var basicAppRouterReferenceText : TextView
 
@@ -35,17 +34,17 @@ class ActivityHost : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        this.basicAppEvents.changeActionBarTitle("Wizard 2")
+        this.basicAppActions.changeActionBarTitle("Wizard 2")
     }
 
     private fun bindObservers() {
-        this.basicAppEvents = this.ownEvents(Wizards.APPLICATION)
-        this.basicAppEvents.actionBarTitle.observe(this, Observer {
+        this.basicAppActions = this.ownActionsScope(Wizards.APPLICATION)
+        this.basicAppActions.actionBarTitle.observe(this, Observer {
             this.supportActionBar?.title = it
         })
 
-        this.wizard2ChildEvents = this.ownEvents(Wizards.WIZARD_2)
-        this.wizard2ChildEvents.sendEvent.observe(this, Observer {
+        this.wizard2ChildActions = this.ownActionsScope(Wizards.WIZARD_2)
+        this.wizard2ChildActions.sendEvent.observe(this, Observer {
             Toast.makeText(this, "Event Received in ActivityHost", Toast.LENGTH_SHORT).show()
         })
     }
@@ -55,8 +54,8 @@ class ActivityHost : AppCompatActivity() {
     }
 
     private fun fillViews() {
-        this.basicAppRouterReferenceText.text = "BasicAppEvents: ${basicAppEvents}\n" +
-                "Wizard2ChildEvents: ${wizard2ChildEvents}"
+        this.basicAppRouterReferenceText.text = "BasicAppActions: ${basicAppActions}\n" +
+                "Wizard2ChildActions: ${wizard2ChildActions}"
     }
 
     private fun initWizard() {

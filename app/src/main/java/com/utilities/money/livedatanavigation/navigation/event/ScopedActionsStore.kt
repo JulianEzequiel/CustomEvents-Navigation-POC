@@ -3,7 +3,7 @@ package com.utilities.money.livedatanavigation.navigation.event
 import java.util.*
 
 @Suppress("UNCHECKED_CAST")
-class EventsStore {
+class ScopedActionsStore {
 
     private val mMap = HashMap<String, Any>()
 

@@ -10,13 +10,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.utilities.money.livedatanavigation.R
 import com.utilities.money.livedatanavigation.navigation.common.Wizards
-import com.utilities.money.livedatanavigation.BasicAppEvents
-import com.utilities.money.livedatanavigation.wizard1.event.Wizard1ChildEvents
-import com.utilities.money.livedatanavigation.navigation.util.getObserver
+import com.utilities.money.livedatanavigation.wizard1.event.Wizard1ChildActions
+import com.utilities.money.livedatanavigation.navigation.util.getScopedActions
 
 class FragmentChildWizard1 : Fragment() {
 
-    lateinit var ownEvents: Wizard1ChildEvents
+    lateinit var ownActions: Wizard1ChildActions
 
     lateinit var basicAppRouterReferenceText : TextView
 
@@ -38,12 +37,12 @@ class FragmentChildWizard1 : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        this.ownEvents = this.getObserver(Wizards.WIZARD_1)
+        this.ownActions = this.getScopedActions(Wizards.WIZARD_1)
     }
 
     private fun bindViewListeners(view: View) {
         view.findViewById<Button>(R.id.show_event_button)?.setOnClickListener {
-            this.ownEvents.sendEvent.call()
+            this.ownActions.sendEvent.call()
         }
     }
 
@@ -52,7 +51,7 @@ class FragmentChildWizard1 : Fragment() {
     }
 
     private fun fillViews() {
-        this.basicAppRouterReferenceText.text = "Wizard1ChildEvents: ${ownEvents}"
+        this.basicAppRouterReferenceText.text = "Wizard1ChildActions: ${ownActions}"
     }
 
 }

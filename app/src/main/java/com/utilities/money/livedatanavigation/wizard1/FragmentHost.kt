@@ -11,16 +11,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.utilities.money.livedatanavigation.R
 import com.utilities.money.livedatanavigation.navigation.common.Wizards
-import com.utilities.money.livedatanavigation.BasicAppEvents
-import com.utilities.money.livedatanavigation.navigation.util.getObserver
-import com.utilities.money.livedatanavigation.navigation.util.ownEvents
-import com.utilities.money.livedatanavigation.wizard1.event.Wizard1ChildEvents
+import com.utilities.money.livedatanavigation.BasicAppActions
+import com.utilities.money.livedatanavigation.navigation.util.getScopedActions
+import com.utilities.money.livedatanavigation.navigation.util.ownActionsScope
+import com.utilities.money.livedatanavigation.wizard1.event.Wizard1ChildActions
 
 class FragmentHost : Fragment() {
 
-    lateinit var basicAppEvents: BasicAppEvents
+    lateinit var basicAppActions: BasicAppActions
 
-    lateinit var wizard1ChildEvents: Wizard1ChildEvents
+    lateinit var wizard1ChildActions: Wizard1ChildActions
 
     lateinit var basicAppRouterReferenceText : TextView
 
@@ -44,18 +44,18 @@ class FragmentHost : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        this.basicAppEvents = this.getObserver(Wizards.APPLICATION)
-        this.wizard1ChildEvents = this.ownEvents(Wizards.WIZARD_1)
+        this.wizard1ChildActions = this.ownActionsScope(Wizards.WIZARD_1)
+        this.basicAppActions = this.getScopedActions(Wizards.APPLICATION)
     }
 
     override fun onResume() {
         super.onResume()
 
-        this.basicAppEvents.changeActionBarTitle("Wizard 1")
+        this.basicAppActions.changeActionBarTitle("Wizard 1")
     }
 
     private fun bindObservers() {
-        this.wizard1ChildEvents.sendEvent.observe(this, Observer {
+        this.wizard1ChildActions.sendEvent.observe(this, Observer {
             Toast.makeText(this.context, "Event Received in FragmentHost", Toast.LENGTH_SHORT)
                 .show()
         })
@@ -66,8 +66,8 @@ class FragmentHost : Fragment() {
     }
 
     private fun fillViews() {
-        this.basicAppRouterReferenceText.text = "basicAppEvents: ${basicAppEvents}\n" +
-                "Wizard1ChildEvents: ${wizard1ChildEvents}"
+        this.basicAppRouterReferenceText.text = "basicAppActions: ${basicAppActions}\n" +
+                "Wizard1ChildActions: ${wizard1ChildActions}"
     }
 
     private fun initWizard() {

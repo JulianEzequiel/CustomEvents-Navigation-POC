@@ -7,14 +7,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.utilities.money.livedatanavigation.navigation.common.Wizards
-import com.utilities.money.livedatanavigation.navigation.util.getObserver
-import com.utilities.money.livedatanavigation.navigation.util.ownEvents
+import com.utilities.money.livedatanavigation.navigation.util.ownActionsScope
 import com.utilities.money.livedatanavigation.wizard1.FragmentHost
 import com.utilities.money.livedatanavigation.wizard2.ActivityHost
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var basicAppEvents: BasicAppEvents
+    lateinit var basicAppActions: BasicAppActions
 
     lateinit var basicAppRouterReferenceText : TextView
 
@@ -30,9 +29,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindObservers() {
-        this.basicAppEvents = this.ownEvents(Wizards.APPLICATION)
+        this.basicAppActions = this.ownActionsScope(Wizards.APPLICATION)
 
-        this.basicAppEvents.actionBarTitle.observe(this, Observer {
+        this.basicAppActions.actionBarTitle.observe(this, Observer {
             this.supportActionBar?.title = it
         })
     }
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fillViews() {
-        this.basicAppRouterReferenceText.text = "BasicAppEvents: ${basicAppEvents}"
+        this.basicAppRouterReferenceText.text = "BasicAppActions: ${basicAppActions}"
     }
 
 }

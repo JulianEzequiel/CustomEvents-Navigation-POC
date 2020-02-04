@@ -3,7 +3,7 @@ package com.utilities.money.livedatanavigation
 import androidx.lifecycle.LiveData
 import com.utilities.money.livedatanavigation.navigation.common.SingleLiveEvent
 
-class BasicAppEvents {
+class BasicAppActions {
 
     private val _actionBarTitle =
         SingleLiveEvent<String>()

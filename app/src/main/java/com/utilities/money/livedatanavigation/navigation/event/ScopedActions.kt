@@ -6,8 +6,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 
 @Suppress("UNCHECKED_CAST")
-class EventProvider private constructor(
-    val store: EventsStore,
+class ScopedActions private constructor(
+    val storeScoped: ScopedActionsStore,
     lifecycleOwner: LifecycleOwner?
 ) : LifecycleObserver {
 
@@ -17,29 +17,29 @@ class EventProvider private constructor(
 
     companion object {
 
-        internal fun get(lifecycleOwner: LifecycleOwner): EventProvider {
-            val store = EventsStore()
-            return EventProvider(store, lifecycleOwner)
+        internal fun get(lifecycleOwner: LifecycleOwner): ScopedActions {
+            val store = ScopedActionsStore()
+            return ScopedActions(store, lifecycleOwner)
         }
 
     }
 
     fun <T: Any> get(clazz: Class<T>): T {
-        val observer = this.store.get(clazz)
+        val observer = this.storeScoped.get(clazz)
         if(observer != null) {
             return observer
         }
-        return createObserver(clazz)
+        return createScopedActions(clazz)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onLifecycleOwnerDestroyed() {
-        this.store.clear()
+        this.storeScoped.clear()
     }
 
-    private fun <T: Any> createObserver(clazz: Class<T>): T {
+    private fun <T: Any> createScopedActions(clazz: Class<T>): T {
         val observer = clazz.constructors.get(0).newInstance() as T
-        this.store.put(clazz, observer)
+        this.storeScoped.put(clazz, observer)
         return observer
     }
 
