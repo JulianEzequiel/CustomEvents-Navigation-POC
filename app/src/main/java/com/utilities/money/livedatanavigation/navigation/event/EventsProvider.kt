@@ -8,12 +8,21 @@ object EventsProvider {
 
     private val observerProviders = HashMap<String, EventProvider>()
 
-    fun of(wizard: Wizards, lifecycleOwner: LifecycleOwner): EventProvider {
+    fun own(wizard: Wizards, lifecycleOwner: LifecycleOwner): EventProvider {
         val key = wizard.key(lifecycleOwner)
         if (observerProviders.containsKey(key)) {
             return observerProviders[key]!!
         }
         return createObserverProvider(key, lifecycleOwner)
+    }
+
+    fun of(wizard: Wizards, lifecycleOwner: LifecycleOwner): EventProvider {
+        val key = wizard.key(lifecycleOwner)
+        if (observerProviders.containsKey(key)) {
+            return observerProviders[key]!!
+        } else {
+            throw IllegalAccessException("You have to OWN the Events First before you can ask for them")
+        }
     }
 
     private fun createObserverProvider(

@@ -7,10 +7,10 @@ import com.utilities.money.livedatanavigation.navigation.event.EventsProvider
 import java.lang.IllegalStateException
 
 inline fun <reified T: Any> FragmentActivity.ownEvents(wizards: Wizards): T =
-    EventsProvider.of(wizards, this).get(T::class.java)
+    EventsProvider.own(wizards, this).get(T::class.java)
 
 inline fun <reified T: Any> Fragment.ownEvents(wizards: Wizards): T =
-    EventsProvider.of(wizards, this).get(T::class.java)
+    EventsProvider.own(wizards, this).get(T::class.java)
 
 inline fun <reified T: Any> Fragment.getObserver(wizards: Wizards): T {
     this.parentFragment?.let {
