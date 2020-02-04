@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CustomEventsNavigation</string>
+    <string name="wizard_2_name">Wizard 2</string>
+    <string name="wizard_1_fragment_button">Wizard 1 (Fragment)</string>
+    <string name="wizard_2_activity_button">Wizard 2 (Activity)</string>
+    <string name="wizard_1_child_fragment">Wizard 1 Child Fragment</string>
+    <string name="wizard_2_child_fragment">Wizard 2 Child Fragment</string>
+    <string name="wizard_1_name">Wizard 1</string>
+    <string name="send_event">Send Event</string>
+</resources>
