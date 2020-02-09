@@ -18,10 +18,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var basicAppRouterReferenceText : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        this.bindObservers()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        this.bindObservers()
         this.bindViewListeners()
 
         this.bindViews()

@@ -20,10 +20,10 @@ class ActivityHost : AppCompatActivity() {
     lateinit var basicAppRouterReferenceText : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        this.bindObservers()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wizard_2_layout)
-
-        this.bindObservers()
 
         this.bindViews()
         this.fillViews()

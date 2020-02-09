@@ -19,6 +19,12 @@ class FragmentChildWizard1 : Fragment() {
 
     lateinit var basicAppRouterReferenceText : TextView
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        this.ownActions = this.getScopedActions(Wizards.WIZARD_1)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,12 +38,6 @@ class FragmentChildWizard1 : Fragment() {
         this.fillViews()
 
         return view
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-
-        this.ownActions = this.getScopedActions(Wizards.WIZARD_1)
     }
 
     private fun bindViewListeners(view: View) {

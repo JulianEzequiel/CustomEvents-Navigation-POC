@@ -7,6 +7,8 @@ import androidx.lifecycle.OnLifecycleEvent
 
 @Suppress("UNCHECKED_CAST")
 class ScopedActions private constructor(
+    val key: String,
+    val actionsProvider: ActionsProvider,
     val storeScoped: ScopedActionsStore,
     lifecycleOwner: LifecycleOwner?
 ) : LifecycleObserver {
@@ -17,9 +19,9 @@ class ScopedActions private constructor(
 
     companion object {
 
-        internal fun get(lifecycleOwner: LifecycleOwner): ScopedActions {
+        internal fun get(key: String, actionsProvider: ActionsProvider, lifecycleOwner: LifecycleOwner): ScopedActions {
             val store = ScopedActionsStore()
-            return ScopedActions(store, lifecycleOwner)
+            return ScopedActions(key, actionsProvider, store, lifecycleOwner)
         }
 
     }
@@ -35,6 +37,7 @@ class ScopedActions private constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onLifecycleOwnerDestroyed() {
         this.storeScoped.clear()
+        this.actionsProvider.removeScopedActions(this.key)
     }
 
     private fun <T: Any> createScopedActions(clazz: Class<T>): T {

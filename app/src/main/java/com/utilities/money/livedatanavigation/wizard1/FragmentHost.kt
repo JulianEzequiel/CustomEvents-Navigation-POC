@@ -24,14 +24,18 @@ class FragmentHost : Fragment() {
 
     lateinit var basicAppRouterReferenceText : TextView
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        this.bindObservers()
+
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_wizard_1_host_layout, container, false)
-
-        this.bindObservers()
 
         this.bindViews(view)
         this.fillViews()
@@ -41,13 +45,6 @@ class FragmentHost : Fragment() {
         return view
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-
-        this.wizard1ChildActions = this.ownActionsScope(Wizards.WIZARD_1)
-        this.basicAppActions = this.getScopedActions(Wizards.APPLICATION)
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -55,6 +52,9 @@ class FragmentHost : Fragment() {
     }
 
     private fun bindObservers() {
+        this.wizard1ChildActions = this.ownActionsScope(Wizards.WIZARD_1)
+        this.basicAppActions = this.getScopedActions(Wizards.APPLICATION)
+
         this.wizard1ChildActions.sendEvent.observe(this, Observer {
             Toast.makeText(this.context, "Event Received in FragmentHost", Toast.LENGTH_SHORT)
                 .show()

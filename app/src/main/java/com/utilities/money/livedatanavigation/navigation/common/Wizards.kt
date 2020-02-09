@@ -11,5 +11,5 @@ enum class Wizards {
 }
 
 fun Wizards.key(lifecycleOwner: LifecycleOwner): String {
-    return "${this.javaClass.canonicalName} - ${lifecycleOwner.javaClass.canonicalName}"
+    return "${this.javaClass.canonicalName} - $lifecycleOwner"
 }

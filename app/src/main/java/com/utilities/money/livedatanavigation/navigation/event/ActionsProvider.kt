@@ -29,9 +29,13 @@ object ActionsProvider {
         key: String,
         lifecycleOwner: LifecycleOwner
     ): ScopedActions {
-        val observerProvider = ScopedActions.get(lifecycleOwner)
+        val observerProvider = ScopedActions.get(key, this, lifecycleOwner)
         scopedActionsMap.put(key, observerProvider)
         return observerProvider
+    }
+
+    fun removeScopedActions(key: String) {
+        this.scopedActionsMap.remove(key)
     }
 
 }
